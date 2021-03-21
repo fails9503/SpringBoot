@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+//@Service
 public class MemberService {
 
 
@@ -21,10 +21,11 @@ public class MemberService {
     //    private final MemberRepository memberRepository = new MemoryMemberRepository();
 
     // 인젝션 주입
-    @Autowired
-    public MemberService(MemoryMemberRepository memberRepository) {
+//    @Autowired
+    public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
+
     /*
      * 회원가입
      */

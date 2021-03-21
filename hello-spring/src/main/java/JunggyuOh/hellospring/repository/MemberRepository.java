@@ -5,6 +5,7 @@ import JunggyuOh.hellospring.domain.Member;
 import java.util.List;
 import java.util.Optional;
 
+// 저장기능
 public interface MemberRepository {
     Member save(Member member);
     Optional<Member> findById(Long id);
