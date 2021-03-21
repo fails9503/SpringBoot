@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>이름</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- model을 통해 넘김 memberContorller에서 넘길때 Attributename을 members로 넘겼으니 여기서도 ${members}로 접근 -->
+            <!-- 위의 members의 id와 패스워드로 접근도 가능 자동으로 getter를 사용함 -->
+            <tr th:each="member : ${members}">
+                <td th:text="${member.id}"></td><!-- getId -->
+                <td th:text="${member.name}"></td><!--getName 메소드를 자동으로 사용함 -->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div> <!-- /container -->
+</body>
+</html>

@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+// Model에 attribute를 추가해 넘겨주고 타임리프를 이용해 접근!!
+
 @Controller
 public class HelloController {
     
@@ -21,16 +23,19 @@ public class HelloController {
     // 컨트롤러에서 리턴값으로 문자를 반환하면 뷰 리졸버가 화면을 찾아서 처리한다
     // 스프링 부트 템플릿엔진 기본 viewName매핑
     // resources:templates/ +{ViewName}+ .html
+    // 아래에선 return "hello"이므로 hello.html매핑
 
     @GetMapping("hello")
     public String hello(Model model) {
         model.addAttribute("data", "hello!");
+        model.addAttribute("age", 15);
         return "hello";
     }
 
     // 컨트롤+p하면 파라미터 정보를 볼 수 있음
     // required=true가 기본값임 반드시 입력해야 하는지를 지정하는값
     // 파라미터 넘길때 required가 true인 값을 같이 넘겨주지 않으면 오류가 발생함
+    // 이 경우 true이므로 localhost:8080/hello-mvc?name=???과 같은 형태로 넘어가야함
     @GetMapping("hello-mvc")
     public String helloMvc(@RequestParam(name="name", required = true) String name, Model model) {
         model.addAttribute("name", name);
@@ -60,7 +65,7 @@ public class HelloController {
     @ResponseBody
     public Hello helloApi(@RequestParam("name") String name) {
         Hello hello = new Hello();
-        hello.setName("hello");
+        hello.setName(name);
         return hello;
     }
 

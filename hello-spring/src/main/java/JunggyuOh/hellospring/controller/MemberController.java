@@ -1,9 +1,15 @@
 package JunggyuOh.hellospring.controller;
 
+import JunggyuOh.hellospring.domain.Member;
 import JunggyuOh.hellospring.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 // Spring Bean은 스프링이 동작할때 자동으로 생성해줌
 // 컴포넌트 스캔을 통해 생성
@@ -35,7 +41,6 @@ import org.springframework.stereotype.Controller;
 
  */
 
-
 @Controller
 public class MemberController {
 
@@ -44,5 +49,41 @@ public class MemberController {
     @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
+    }
+
+    // home.html 에서 회원 등록을 누르면 get 요청을 통해 createForm()이 수행됨
+    // 템플릿 폴더에서 html을 찾아서 createMemberForm.html을 염
+    // 해당 html파일의 form태그에 "action="/members/new" method="post""가 있음
+    // 입력한 값이 /members/new에 post형식으로 보내진다는 의미임
+    // 그럼 아래의 create가 동작함.
+    // 요청 url은 같지만 get과 post에 따라 다른 메소드가 수행됨.
+
+    @GetMapping("/members/new")
+    public String createForm() {
+        return "members/createMemberForm";
+    }
+
+    // "/members/new"에서 post로 값이 날아오면
+    // member 객체를 생성하고 넘어온 값에서 name을 찾아서 member객체에 입력하고 회원가입.
+    // 이 때 form.getName()이 가능한 이유는 MemberForm의 String 변수 name과
+    // "members/createMemberForm"에서의 input태그의 name이 파라미터의 객체의 같은 이름의 필드인 name과 자동으로 매칭되기 때문
+    // 위의 넣어주는 과정은 setter을 통해 자동으로 넣어줌
+    @PostMapping("/members/new")
+    public String create(MemberForm form) {
+        Member member = new Member();
+        member.setName(form.getName());
+
+        System.out.println(member.getName());
+
+        memberService.join(member);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/members")
+    public String list(Model model) {
+        List<Member> members = memberService.findMember();
+        model.addAttribute("members", members);
+        return "members/memberList";
     }
 }
