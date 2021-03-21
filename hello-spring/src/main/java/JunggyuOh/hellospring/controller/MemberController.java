@@ -40,7 +40,7 @@ import java.util.List;
     }
 
  */
-
+//
 // 멤버 컨트롤러는 어떤 화면을 보여줄지만 정함
 // 실제로 회원가입 등의 기능을 수행하는건 Service인 MemberService가 담당함
 // MemberService는 회원가입, 조회 등의 기능을 수행하지만 실제 데이터는 가지고 있지 않음
